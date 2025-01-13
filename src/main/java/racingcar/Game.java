@@ -53,6 +53,7 @@ public class Game {
             System.out.println(e.getMessage());
             inputTryCount();
         }
+        System.out.println();
     }
 
     public void validateTryCount(String tryCount) {
@@ -61,6 +62,13 @@ public class Game {
         }
         if (Integer.parseInt(tryCount) <= 0) {
             throw new IllegalArgumentException("[ERROR] 시도 횟수는 1 이상이어야 합니다.");
+        }
+    }
+
+    public void moveCars() {
+        System.out.println("실행 결과");
+        for (Car car : cars) {
+            car.move();
         }
     }
 
