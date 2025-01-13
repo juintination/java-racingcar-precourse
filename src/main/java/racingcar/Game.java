@@ -8,6 +8,7 @@ public class Game {
 
     private static final Game game = null;
     private List<Car> cars;
+    private int tryCount;
 
     private Game() {
     }
@@ -42,8 +43,30 @@ public class Game {
         }
     }
 
+    public void inputTryCount() {
+        System.out.println("시도할 회수는 몇회인가요?");
+        try {
+            String tryCount = Console.readLine();
+            validateTryCount(tryCount);
+            this.tryCount = Integer.parseInt(tryCount);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            inputTryCount();
+        }
+    }
+
+    public void validateTryCount(String tryCount) {
+        if (tryCount.chars().anyMatch(ch -> !Character.isDigit(ch))) {
+            throw new IllegalArgumentException("[ERROR] 숫자가 아닌 값이 포함되어 있습니다.");
+        }
+        if (Integer.parseInt(tryCount) <= 0) {
+            throw new IllegalArgumentException("[ERROR] 시도 횟수는 1 이상이어야 합니다.");
+        }
+    }
+
     public void start() {
         inputCarNames();
+        inputTryCount();
     }
 
 }
