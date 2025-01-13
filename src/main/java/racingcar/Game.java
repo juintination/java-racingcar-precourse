@@ -7,6 +7,7 @@ import camp.nextstep.edu.missionutils.Console;
 public class Game {
 
     private static final Game game = null;
+    private Queue<String> winnersQueue;
     private List<Car> cars;
     private int tryCount;
 
@@ -76,11 +77,40 @@ public class Game {
         for (Car car : cars) {
             car.printPosition();
         }
+        System.out.println();
+    }
+
+    public void identifyWinners() {
+        int maxPosition = 0;
+        for (Car car : cars) {
+            maxPosition = Math.max(maxPosition, car.getPosition());
+        }
+        winnersQueue = new LinkedList<>();
+        for (Car car : cars) {
+            if (car.getPosition() == maxPosition) {
+                winnersQueue.offer(car.getName());
+            }
+        }
+    }
+
+    public void printWinners() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("최종 우승자 : ").append(winnersQueue.poll());
+        while (!winnersQueue.isEmpty()) {
+            sb.append(", ").append(winnersQueue.poll());
+        }
+        System.out.println(sb);
     }
 
     public void start() {
         inputCarNames();
         inputTryCount();
+        while (tryCount-- > 0) {
+            moveCars();
+            printCars();
+        }
+        identifyWinners();
+        printWinners();
     }
 
 }
