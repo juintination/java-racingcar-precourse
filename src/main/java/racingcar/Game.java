@@ -72,6 +72,12 @@ public class Game {
         }
     }
 
+    public void printCars() {
+        for (Car car : cars) {
+            car.printPosition();
+        }
+    }
+
     public void start() {
         inputCarNames();
         inputTryCount();
